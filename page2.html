@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mulah Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-white">
+    <div class="max-w-[640px] h-[1136px] mx-auto px-8 flex flex-col">
+      <!-- Logo -->
+      <div class="mt-32 mb-16">
+        <h1
+          class="text-[#F26522] text-6xl font-bold text-center tracking-widest"
+        >
+          MULAH
+        </h1>
+      </div>
+
+      <!-- Registration Form -->
+      <div class="mb-12">
+        <h2 class="text-[#777777] text-6xl font-serif mb-4">Registration</h2>
+        <p class="text-gray-500 text-lg italic">Please fill up your details.</p>
+      </div>
+
+      <form id="registrationForm" onsubmit="handleSubmit(event)">
+        <!-- Name -->
+        <div class="mb-8">
+          <label class="text-[#777777] text-xl mb-2 block">Name</label>
+          <input
+            type="text"
+            id="name"
+            class="w-full border border-gray-300 rounded-lg p-4 text-lg focus:outline-none focus:border-[#F26522]"
+            placeholder="Enter Name"
+          />
+          <p class="text-[#FF0000] text-base italic mt-1 hidden" id="nameError">
+            *Please insert a name.
+          </p>
+        </div>
+
+        <!-- Birthday -->
+        <div class="mb-8">
+          <label class="text-[#777777] text-xl mb-2 block">Birthday</label>
+          <div class="grid grid-cols-3 gap-4">
+            <input
+              type="text"
+              id="day"
+              placeholder="DD"
+              class="border border-gray-300 rounded-lg p-4 text-center text-lg focus:outline-none focus:border-[#F26522]"
+            />
+            <input
+              type="text"
+              id="month"
+              placeholder="MM"
+              class="border border-gray-300 rounded-lg p-4 text-center text-lg focus:outline-none focus:border-[#F26522]"
+            />
+            <input
+              type="text"
+              id="year"
+              placeholder="YYYY"
+              class="border border-gray-300 rounded-lg p-4 text-center text-lg focus:outline-none focus:border-[#F26522]"
+            />
+          </div>
+          <p
+            class="text-[#FF0000] text-base italic mt-1 hidden"
+            id="birthdayError"
+          >
+            *Please insert your birthday.
+          </p>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-12">
+          <label class="text-[#777777] text-xl mb-2 block">Email</label>
+          <input
+            type="email"
+            id="email"
+            class="w-full border border-gray-300 rounded-lg p-4 text-lg focus:outline-none focus:border-[#F26522]"
+            placeholder="Email Address"
+          />
+          <p
+            class="text-[#FF0000] text-base italic mt-1 hidden"
+            id="emailError"
+          >
+            *Please insert a valid email address.
+          </p>
+          <div class="mt-2">
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                id="noEmail"
+                class="mr-2"
+                onchange="handleNoEmail()"
+              />
+              <span class="text-gray-500 italic">No email address</span>
+            </label>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-[#F26522] text-white text-xl font-medium py-4 rounded-full"
+        >
+          Continue
+        </button>
+      </form>
+
+      <!-- Footer -->
+      <div class="border-t border-gray-200 mt-auto py-8">
+        <p class="text-center text-xl text-gray-400">
+          Powered by <a href="#" class="text-[#4169E1]">MulahRewards.com</a>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      function handleNoEmail() {
+        const emailInput = document.getElementById("email");
+        const noEmailCheckbox = document.getElementById("noEmail");
+        const emailError = document.getElementById("emailError");
+
+        emailInput.disabled = noEmailCheckbox.checked;
+        if (noEmailCheckbox.checked) {
+          emailInput.value = "";
+          emailError.classList.add("hidden");
+        }
+      }
+
+      function validateEmail(email) {
+        return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+      }
+
+      function handleSubmit(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const day = document.getElementById("day").value;
+        const month = document.getElementById("month").value;
+        const year = document.getElementById("year").value;
+        const email = document.getElementById("email").value;
+        const noEmail = document.getElementById("noEmail").checked;
+
+        // Reset error states
+        document.getElementById("nameError").classList.add("hidden");
+        document.getElementById("birthdayError").classList.add("hidden");
+        document.getElementById("emailError").classList.add("hidden");
+
+        let hasError = false;
+
+        // Validate name
+        if (!name || name.trim() === "") {
+          document.getElementById("nameError").classList.remove("hidden");
+          hasError = true;
+        }
+
+        // Validate birthday
+        if (!day || !month || !year) {
+          document.getElementById("birthdayError").classList.remove("hidden");
+          hasError = true;
+        }
+
+        // Validate email
+        if (!noEmail && (!email || !validateEmail(email))) {
+          document.getElementById("emailError").classList.remove("hidden");
+          hasError = true;
+        }
+
+        if (hasError) {
+          return;
+        }
+
+        const userData = {
+          name,
+          birthday: `${day}/${month}/${year}`,
+          email: noEmail ? "No email provided" : email,
+        };
+
+        localStorage.setItem("userData", JSON.stringify(userData));
+        window.location.href = "page3.html";
+      }
+    </script>
+  </body>
+</html>

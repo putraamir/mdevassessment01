@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mulah Rewards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-white">
+    <div class="max-w-[640px] h-[1136px] mx-auto px-8 flex flex-col">
+      <!-- Logo -->
+      <div class="mt-32 mb-40">
+        <h1
+          class="text-[#F26522] text-6xl font-bold text-center tracking-widest"
+        >
+          MULAH
+        </h1>
+      </div>
+
+      <!-- Welcome Text -->
+      <div class="mb-32">
+        <h2 class="text-[#777777] text-7xl leading-tight font-serif mb-16">
+          Hello,<br />Welcome !
+        </h2>
+        <p class="text-[#F26522] text-xl font-semibold">
+          Check Your Loyalty Points & Rewards
+        </p>
+      </div>
+
+      <!-- Form -->
+      <form id="phoneForm" class="mb-auto" onsubmit="handleSubmit(event)">
+        <div
+          class="relative border-b-2 border-[#F26522] flex items-center mb-24"
+        >
+          <select
+            class="bg-transparent text-xl text-gray-500 py-2 pr-2 focus:outline-none"
+          >
+            <option value="+60">+60</option>
+          </select>
+          <input
+            type="text"
+            id="phone"
+            class="flex-1 bg-transparent text-xl px-2 py-2 focus:outline-none"
+            placeholder="Enter your mobile number"
+            required
+          />
+          <span class="text-gray-400">✓</span>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-[#F26522] text-white text-xl font-medium py-4 rounded-full"
+        >
+          Check Loyalty Points
+        </button>
+      </form>
+
+      <!-- Footer -->
+      <div class="border-t border-gray-200 mt-auto py-8">
+        <p class="text-center text-xl text-gray-400">
+          Powered by <a href="#" class="text-[#4169E1]">MulahRewards.com</a>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      function handleSubmit(event) {
+        event.preventDefault();
+        const phone = document.getElementById("phone").value;
+
+        localStorage.setItem("userPhone", "+60" + phone);
+        window.location.href = "page2.html";
+      }
+    </script>
+  </body>
+</html>
